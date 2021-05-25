@@ -5,7 +5,7 @@
  * @param {*} key
  * @param {*} index
  */
-const resloveArrayDataKey = (key, index) => {
+const resolveArrayDataKey = (key, index) => {
   const leftBracketIndex = key.indexOf('[');
   const rightBracketIndex = key.indexOf(']');
   const result = {};
@@ -42,25 +42,39 @@ const getGloabData = (key, dataset) => {
   return result;
 };
 
-const getPageData = (key, dataset = {}, paegData) => {
+/**
+ * @description: 从页面中获取data的内容
+ * @param {*} key
+ * @param {*} dataset
+ * @param {*} pageData
+ * @return {*}
+ */
+const getPageData = (key, dataset = {}, pageData) => {
   const { index } = dataset;
   const keys = key.split('.');
-  let result = paegData;
+  let result = pageData;
   if (keys.length > -1) {
     keys.forEach((name) => {
-      const res = resloveArrayDataKey(name, index);
-      if (res.key) {
+      const res = resolveArrayDataKey(name, index);
+      if (res.key && result[res.key]) {
         result = result[res.key][res.index];
       } else {
         result = result[name];
       }
     });
   } else {
-    result = paegData[key];
+    result = pageData[key];
   }
   return result;
 };
 
+/**
+ * @description: 根据key的内容蓉dataset/pageData内寻找对应的值
+ * @param {*} key
+ * @param {*} dataset
+ * @param {*} pageData
+ * @return {*}
+ */
 const dataReader = (key, dataset, pageData) => {
   try {
     let result = '';
@@ -76,8 +90,13 @@ const dataReader = (key, dataset, pageData) => {
   }
 };
 
-
-const report = (track, pageData) => {
+/**
+ * @description: 生成返回数据数组
+ * @param {*} track
+ * @param {*} pageData
+ * @return {Array} 指定的返回数据
+ */
+const generateReport = (track, pageData) => {
   const { element, method } = track;
   const logger = [];
   track.dataKeys.forEach(name => {
@@ -85,6 +104,7 @@ const report = (track, pageData) => {
     logger.push({ element, method, name, data });
   });
   console.table(logger);
+  return logger
 };
 
-export default report;
+export default generateReport;

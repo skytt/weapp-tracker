@@ -55,11 +55,11 @@ class Wrapper {
    * @param {Array} methods 需要追加的函数数组
    */
   _addExtraMethod(target, methods) {
-    methods
-      .forEach(fn => {
-        const methodName = fn.name;
-        target[methodName] = fn;
-      });
+    methods.forEach(fn => {
+      // 兼容强制定义的函数名
+      const methodName = fn.customName || fn.name;
+      target[methodName] = fn;
+    });
   }
 
   /**
@@ -76,8 +76,15 @@ class Wrapper {
     return target;
   }
 
+  /**
+   * @description: 包装component
+   * @param {*} component
+   * @param {*} injectMethods
+   * @param {*} extraMethods
+   * @return {*}
+   */
   _createComponent(component, injectMethods, extraMethods) {
-    const target = component.methods;
+    const target = component.methods || {};   // 部分组件不带methods属性，做兼容
     Object.keys(target)
       .filter((prop) => typeof target[prop] === 'function')
       .forEach((methodName) => {
@@ -107,6 +114,11 @@ class Wrapper {
     this.extraAppMethods.push(fn);
   }
 
+  /**
+   * 以下三个方法用以在使用插件的时候对app/page/component进行包装
+   * 在小程序支持库2.6.3后，已经开放了使用插件时候对基础类的修改限制，故已经废弃使用
+   * 为了保证向下兼容的可能性，做保留
+   */
   createApp(app) {
     globalVarApp(this._create(app, this.injectAppMethods, this.extraAppMethods));
   }

@@ -11,6 +11,7 @@ export const getBoundingClientRect = function (element) {
         query.exec(res => reslove({ boundingClientRect: res[0], scrollOffset: res[1] }));
     });
 };
+
 /**
  * 判断点击是否落在目标元素
  * @param {Object} clickInfo 用户点击坐标
@@ -51,8 +52,4 @@ export const getPrevPage = function () {
       return curPages[curPages.length - 2];
     }
     return {};
-};
-
-export const _isPromise = function (value) {
-    return value && Object.prototype.toString.call(value) === '[object Promise]';
 };
