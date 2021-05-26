@@ -25,7 +25,7 @@ class Wrapper {
    */
   _wrapTargetMethod(target, component, methodName, methods = []) {
     const methodFunction = target[methodName];
-    target[methodName] = function _aa(...args) {
+    target[methodName] = function _wrapperCreatedFunc(...args) {
       const result = methodFunction && methodFunction.apply(this, args);
       const methodExcuter = () => {
         methods.forEach((fn) => {

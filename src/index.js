@@ -21,7 +21,7 @@ class Tracker extends Wrapper {
    * @description: 接受异步注入的配置
    * @param {*} tracks
    * @return {*}
-   */  
+   */
   regConfig(tracks) {
     this.tracks = tracks;
   }
@@ -30,7 +30,7 @@ class Tracker extends Wrapper {
    * @description: 接收元素的事件，会被注入到对应函数的下方
    * @param {*}
    * @return {*}
-   */  
+   */
   elementTracker() {
     // elementTracker变量名尽量不要修改，因为他和wxml下的名字是相对应的
     const elementTracker = (e) => {
@@ -56,7 +56,7 @@ class Tracker extends Wrapper {
    * @description: 方法捕获事件，会被检测后进行包装
    * @param {*}
    * @return {*}
-   */  
+   */
   methodTracker() {
     return (page, component, methodName, args = {}) => {
       const tracks = this.findActivePageTracks('method');
@@ -65,6 +65,7 @@ class Tracker extends Wrapper {
       tracks.forEach((track) => {
         if (track.method === methodName) {
           track.dataset = dataset;
+          track.args = args || [];
           // report(track, data);
           this.handleReport(track, data)
         }
@@ -76,7 +77,7 @@ class Tracker extends Wrapper {
    * @description: 组件方法包装
    * @param {*}
    * @return {*}
-   */  
+   */
   comMethodTracker() {
     // function函数改变上下文this指针，指向组件
     const self = this
@@ -103,7 +104,7 @@ class Tracker extends Wrapper {
     try {
       const { route } = getActivePage();
       const pageTrackConfig = this.tracks.find(item => item.path === route) || {};
-      let tracks = {};
+      let tracks = [];
       if (type === 'method') {
         tracks = pageTrackConfig.methodTracks || [];
       } else if (type === 'element') {
@@ -111,7 +112,7 @@ class Tracker extends Wrapper {
       } else if (type === 'comMethod') {
         tracks = pageTrackConfig.comMethodTracks || [];
       }
-      return tracks;
+      return [...tracks];
     } catch (e) {
       return {};
     }
@@ -122,13 +123,25 @@ class Tracker extends Wrapper {
    * @param {*} track
    * @param {*} data
    * @return {*}
-   */  
+   */
   handleReport(track, data) {
     const reportData = {
       evtName: track.evtName || '',
       report: generateReport(track, data),
     }
     this.onTrackEvent(reportData, track)
+  }
+
+  emit(evtName, emitData) {
+    if (!Array.isArray(emitData)) {
+      emitData = [emitData]
+    }
+    const reportData = {
+      evtName: evtName || '',
+      report: emitData,
+    }
+    console.table(emitData)
+    this.onTrackEvent(reportData)
   }
 }
 

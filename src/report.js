@@ -23,11 +23,11 @@ const resolveArrayDataKey = (key, index) => {
 
 /**
  * 获取全局数据
- * @param {*} key 目前支持$APP.* $DATASET.* $INDEX
+ * @param {*} key 目前支持$APP.* $DATASET.* $INDEX $ARG.*
  * @param {*} dataset 点击元素dataset
  * @param {*} index 点击元素索引
  */
-const getGloabData = (key, dataset) => {
+const getGlobalData = (key, dataset = {}, args = {}) => {
   let result = '';
   if (key.indexOf('$APP.') > -1) {
     const App = getApp();
@@ -38,6 +38,9 @@ const getGloabData = (key, dataset) => {
     result = dataset[setKey];
   } else if (key.indexOf('$INDEX') > -1) {
     result = dataset.index;
+  } else if (key.indexOf('$ARG') > -1) {
+    const argKey = key.split('$ARG.')[1];
+    result = args[argKey];
   }
   return result;
 };
@@ -75,11 +78,11 @@ const getPageData = (key, dataset = {}, pageData) => {
  * @param {*} pageData
  * @return {*}
  */
-const dataReader = (key, dataset, pageData) => {
+const dataReader = (key, dataset, pageData, args) => {
   try {
     let result = '';
     if (key.indexOf('$') === 0) {
-      result = getGloabData(key, dataset);
+      result = getGlobalData(key, dataset, args);
     } else {
       result = getPageData(key, dataset, pageData);
     }
@@ -100,9 +103,10 @@ const generateReport = (track, pageData) => {
   const { element, method } = track;
   const logger = [];
   track.dataKeys.forEach(name => {
-    const data = dataReader(name, track.dataset, pageData);
+    const data = dataReader(name, track.dataset, pageData, track.args);
     logger.push({ element, method, name, data });
   });
+  console.log(track.args)
   console.table(logger);
   return logger
 };
