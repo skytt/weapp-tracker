@@ -3,7 +3,13 @@ import { getBoundingClientRect, isClickTrackArea, getActivePage } from './helper
 import generateReport from './report';
 
 class Tracker extends Wrapper {
-  constructor({ tracks, onTrackEvent = () => { }, isUsingPlugin, asyncReg = false }) {
+  constructor({
+    tracks,
+    onTrackEvent = () => { },
+    isUsingPlugin,
+    watchRouteChange,
+    asyncReg = false
+  }) {
     super(isUsingPlugin);
     // 埋点配置信息
     this.tracks = asyncReg ? [] : tracks;
@@ -15,6 +21,10 @@ class Tracker extends Wrapper {
     this.addPageMethodWrapper(this.methodTracker());
     // 自动给page component下预先定义的方法进行监听，用作方法执行埋点
     this.addComponentMethodWrapper(this.comMethodTracker());
+
+    if (watchRouteChange) {
+      this.regRouteChangeWatcher()
+    }
   }
 
   /**
@@ -24,6 +34,23 @@ class Tracker extends Wrapper {
    */
   regConfig(tracks) {
     this.tracks = tracks;
+  }
+
+  regRouteChangeWatcher() {
+    wx.onAppRoute(routeRes => {
+      const report = []
+      Object.keys(routeRes).forEach(key => {
+        report.push({
+          name: key,
+          data: routeRes[key]
+        })
+      })
+      const reportData = {
+        evtName: 'route_change',
+        report,
+      }
+      this.onTrackEvent(reportData)
+    })
   }
 
   /**
