@@ -21,7 +21,7 @@ import Tracker from "./weapptracker.min.js";
 
 2. 配置埋点
    埋点以页面作为核心，每个页面分别支持通过元素、方法、自定义组件的维度添加埋点。
-   详细的配置信息可参考[埋点配置章节](##埋点配置)内容。
+   详细的配置信息可参考[埋点配置章节](#埋点配置)内容。
 
 ```javascript
 const trackConfig = [
@@ -47,7 +47,7 @@ const trackConfig = [
 
 |      参数名      |   类型   | 说明                                                                 | 是否必须 | 示例                                  |
 | :--------------: | :------: | -------------------------------------------------------------------- | :------: | ------------------------------------- |
-|   onTrackEvent   | Function | 埋点被触发后的回调函数，处理方式可参考[埋点事件回调](##埋点事件回调) |  `true`  | `(report) => { console.log(report) }` |
+|   onTrackEvent   | Function | 埋点被触发后的回调函数，处理方式可参考[埋点事件回调](#埋点事件回调) |  `true`  | `(report) => { console.log(report) }` |
 |      tracks      |  Array   | 预置埋点时候的组件                                                   | `false`  |                                       |
 |     asyncReg     | Boolean  | 是否异步加载埋点配置。在需要通过网络获取埋点配置时开启               | `false`  |                                       |
 | watchRouteChange | Boolean  | 是否开启路由监听                                                     | `false`  |                                       |
@@ -109,7 +109,7 @@ App({
 
 下方展示了不同的埋点配置方式。除了自动埋点以外，还可以通过手动埋点的方式在 utils 工具类中实现数据上报。
 
-自动上报时，支持通过特殊的 dataKeys 值来获取点击事件的 event 或方法执行的函数，详见[DataKeys 中的特殊键值](##`DataKeys`中的特殊键值)章节。
+自动上报时，支持通过特殊的 dataKeys 值来获取点击事件的 event 或方法执行的函数，详见[DataKeys 中的特殊键值](#`DataKeys`中的特殊键值)章节。
 
 ### 页面元素埋点
 
