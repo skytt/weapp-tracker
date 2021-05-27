@@ -109,7 +109,7 @@ App({
 
 下方展示了不同的埋点配置方式。除了自动埋点以外，还可以通过手动埋点的方式在 utils 工具类中实现数据上报。
 
-自动上报时，支持通过特殊的 dataKeys 值来获取点击事件的 event 或方法执行的函数，详见[DataKeys 中的特殊键值](#`DataKeys`中的特殊键值)章节。
+自动上报时，支持通过特殊的 dataKeys 值来获取点击事件的 event 或方法执行的函数，详见[DataKeys 中的特殊键值](#DataKeys中的特殊键值)章节。
 
 ### 页面元素埋点
 
@@ -181,7 +181,7 @@ onTrackEvent: (reportData, track = {}) => {
 };
 ```
 
-## `DataKeys`中的特殊键值
+## DataKeys中的特殊键值
 
 自动埋点的过程中，可以指定以下特殊的 dataKeys 内容实现事件执行时数据的获取。
 
