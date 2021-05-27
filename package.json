@@ -1,8 +1,8 @@
 {
-  "name": "xbosstrack-wechat",
+  "name": "weapp-tracker",
   "version": "1.0.1",
-  "description": "### 声明",
-  "main": "dist/xbosstrack.min.js",
+  "description": "",
+  "main": "dist/weapptracker.min.js",
   "scripts": {
     "lint": "./node_modules/.bin/eslint src",
     "test": "BABEL_ENV=test jest",
@@ -26,14 +26,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/zhengguorong/xbosstrack.git"
+    "url": "git+https://github.com/skytt/weapp-tracker.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/zhengguorong/xbosstrack/issues"
+    "url": "https://github.com/skytt/weapp-tracker/issues"
   },
-  "homepage": "https://github.com/zhengguorong/xbosstrack#readme",
+  "homepage": "https://github.com/skytt/weapp-tracker#readme",
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-jest": "^23.4.2",
