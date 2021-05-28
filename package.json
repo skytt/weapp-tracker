@@ -7,9 +7,9 @@
     "lint": "./node_modules/.bin/eslint src",
     "test": "BABEL_ENV=test jest",
     "codecov": "node_modules/codecov/bin/codecov",
-    "dev": "BABEL_ENV=build node_modules/rollup/bin/rollup --config rollup.config.js --environment entry:src/index.js,dest:dist/xbosstrack.js",
-    "build": " BABEL_ENV=build node_modules/rollup/bin/rollup --config rollup.config.js --environment entry:src/index.js,dest:dist/xbosstrack.min.js,uglify",
-    "watch": "BABEL_ENV=build node_modules/rollup/bin/rollup --config rollup.config.js --environment entry:src/index.js,dest:dist/xbosstrack.js -w"
+    "dev": "BABEL_ENV=build node_modules/rollup/bin/rollup --config rollup.config.js --environment entry:src/index.js,dest:dist/weapptracker.js",
+    "build": " BABEL_ENV=build node_modules/rollup/bin/rollup --config rollup.config.js --environment entry:src/index.js,dest:dist/weapptracker.min.js,uglify",
+    "watch": "BABEL_ENV=build node_modules/rollup/bin/rollup --config rollup.config.js --environment entry:src/index.js,dest:dist/weapptracker.js -w"
   },
   "jest": {
     "verbose": true,
